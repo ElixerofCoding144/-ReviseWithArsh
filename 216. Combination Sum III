@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<vector<int>> valid_combination_list;
+    void combinationSum3Util(int i, int k, int n, vector<int> combination)
+    {
+        //base case 1: if k = 0 && n = 0 found the combination
+        if(k==0 && n==0){ 
+            valid_combination_list.push_back(combination);
+            return;
+        }
+        //base case 2: if k decrements to negative value or n decrements to negative value -> there exists no combination
+        if(k < 0 || n < 0) return;
+        //Only numbers 1 through 9 are used.
+        if(i == 10) return;
+
+        //increment i as each number is used at most once
+        combinationSum3Util(i+1, k, n, combination);
+        combination.push_back(i);
+        //decrement k and n as combination doesn't comprise of 'k' numbers and 'n' yet not achieved
+        //and increment i as each number is used at most once
+        combinationSum3Util(i+1, k-1, n-i, combination);
+        combination.pop_back();
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int>combination;
+        combinationSum3Util(1, k, n, combination);
+        return valid_combination_list;
+    }
+};
