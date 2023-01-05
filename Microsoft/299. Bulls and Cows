@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int n = secret.length(), bull = 0, cow = 0;
+        vector <int> g(10), c(10);//to count cows
+        for(int i = 0; i < n; i++)
+        {
+            if(guess[i] == secret[i]) bull++;
+            else
+            {
+                g[guess[i] - '0']++;//storing ASCII
+                c[secret[i] - '0']++;//storing ASCII
+            }
+        }
+        for(int i = 0; i < 10; i++)
+            cow += min(g[i],c[i]);
+        string output = "";
+        output += to_string(bull);
+        output += "A";
+        output += to_string(cow);
+        output += "B";
+        return output;
+    }
+};
