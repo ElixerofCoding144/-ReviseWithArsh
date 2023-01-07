@@ -1,0 +1,23 @@
+class Solution {
+public:
+int maxPoints(vector<vector<int>>& points) {
+        if(points.size()<=1) return points.size();
+        int maxi = 0;
+        double slope;
+        for(auto p1 : points){            
+            double x1 = p1[0], y1 = p1[1];
+            //cout << x1 << " " << y1 << endl;
+            unordered_map<double,int> mpp;
+            for(auto p2 : points)
+            {
+                if(p2 == p1) continue;
+                double x2 = p2[0], y2 = p2[1];                
+                if(x2-x1==0) slope = INT_MAX;//slope of vertical line is infinity
+                else slope = (y2-y1)/(x2-x1);
+                mpp[slope]++;
+                maxi = max(mpp[slope], maxi);
+            }         
+        }
+        return maxi+1;
+    }  
+};
