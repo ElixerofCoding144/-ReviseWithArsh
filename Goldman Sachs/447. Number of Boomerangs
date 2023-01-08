@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int numberOfBoomerangs(vector<vector<int>>& points) {
+        //Distance between i and j equals the distance between i and k
+        if(points.size() <= 2) return 0;
+        int ans;
+        for(auto p1 : points){
+            unordered_map <double, int>mpp;
+            double x1 = p1[0], y1 = p1[1];
+            for(auto p2 : points){
+                double x2 = p2[0], y2 = p2[1];  
+                double dist = abs(pow(x2-x1,2)+pow(y2-y1,2));
+                mpp[dist]++;
+            }
+            //possibilities of boomerangs using permutation
+            for(auto i : mpp)
+                ans += i.second*(i.second-1);
+        }
+        return ans;
+    }
+};
