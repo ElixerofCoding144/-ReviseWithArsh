@@ -1,1 +1,41 @@
-
+class Solution {
+public:
+    string fractionToDecimal(int numerator, int denominator) {      
+        if(numerator==0) return "0";//if numerator is zero
+        string a;
+        //if either numerator or denominator is negative
+        if((numerator<0 && denominator>0)||(denominator<0 && numerator>0))a+="-";
+        numerator = abs(numerator);
+        denominator = abs(denominator);
+        
+        long quotient = numerator/denominator;
+        long remainder = numerator%denominator;
+        a.append(to_string(quotient));
+        //if numerator is completely divisible by numerator
+        if(remainder== 0){
+            return a;
+        }
+        else{
+            a.append(".");//add decimal point '.'
+            //using map to track for what length of quotient a particular remainder occured
+            unordered_map<long, int> mpp;
+            while(remainder!=0){
+                if(mpp.find(remainder)!=mpp.end()){
+                    //if the remainder appeared earlier also
+                    int position=mpp[remainder];//get the length of the quotient for corresponding remainder
+                    a = a.insert(position, "(");
+                    a.push_back(')');
+                    break;                
+                }
+                else{
+                    mpp[remainder]=a.size();//length of the quotient for the current 
+                    remainder*=10;
+                    quotient = remainder/denominator;
+                    a+=to_string(quotient);
+                    remainder=remainder%denominator;
+                }
+            }
+        }                     
+        return a;
+    }
+};
